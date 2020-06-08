@@ -6,8 +6,8 @@ export default class InputComp extends React.Component {
         this.onClickHandler = this.onClickHandler.bind(this);
         this.onChangeHandler = this.onChangeHandler.bind(this);
         this.state = {
-            textArr: [],
-            value: ''
+            value: '',
+            todo: []
         }
     }
 
@@ -18,10 +18,11 @@ export default class InputComp extends React.Component {
     }
 
     onClickHandler(e) {
-        let textArr = [...this.state.value];
+
         this.setState({
-            textArr
+            todo: [...this.state.todo, { title: this.state.value }]
         })
+        this.state.value = '';
     }
 
     render () {
@@ -29,7 +30,9 @@ export default class InputComp extends React.Component {
             <React.Fragment>
             <input type="text" value={this.state.value} onChange={this.onChangeHandler}/> <br />
             <button type="button" onClick={this.onClickHandler} > Click Me </button>
-             <div> {this.state.textArr.join(',')}</div>
+             {this.state.todo.length > 0 && this.state.todo.map((text)=>{
+                 return <div>{text.title+','}</div>
+             })}
              </React.Fragment>
         )
     }
